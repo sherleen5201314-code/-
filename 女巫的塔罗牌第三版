@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grimoire · 档案</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;500;600&display=swap');
+
+/* Reset and Core Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Witch's Lair Aesthetic - Parchment-like base with rich, soft colors and prominent gold */
+  --ink: #333333; /* Soft charcoal for main text on creamy background */
+  --parchment: #ebe0c8; /* Creamy off-white for main background */
+  --blood: #a63f44; /* Soft Terracotta red/muted blood, based on Terracotta hues in image_2.png */
+  --moss: #6d7762; /* Soft Sage green, based on Sage hues in image_3.png */
+  --gold: #d4af37; /* Brighter, richer gold for prominent golden line-art borders */
+  --bruise: #dcd9d4; /* Light grey for subtle shadows on cream background */
+  --ash: #8b8b8b; /* Medium grey for epigraphs on cream background */
+  --ember: #d98c6c; /* Softer, richer Terracotta orange for card "Meaning" highlights */
+  
+  /* Container and Section Borders with prominent gold line-art */
+  --border-style: 2px solid var(--gold);
+}
+
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Updated Background - Richer 'Witch's Domain' atmosphere with soft colored layers on creamy parchment */
+.cosmos {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(200, 160, 200, 0.15) 0%, transparent 50%), /* Soft purple based on image_2.png left-bottom */
+    radial-gradient(ellipse at 80% 70%, rgba(100, 130, 110, 0.2) 0%, transparent 60%), /* Soft green/sage based on image_3.png right-bottom */
+    radial-gradient(ellipse at 50% 50%, rgba(235, 224, 200, 0.1) 0%, transparent 70%), /* Parchment glow */
+    linear-gradient(180deg, #ebe0c8 0%, #ebe0c8 100%); /* Main creamy parchment background */
+}
+
+/* Golden stars, coordinate color to new gold variable */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 2.5px;
+  height: 2.5px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: twinkle var(--dur, 4s) ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+/* Smoke - coordinated colors to new background and variables */
+.smoke {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(200, 160, 200, 0.05) 0%, transparent 40%), /* Subtle purple smoke */
+    radial-gradient(circle at 70% 80%, rgba(100, 130, 110, 0.06) 0%, transparent 40%); /* Subtle sage smoke */
+  animation: drift 30s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -20px); }
+}
+
+/* Main container */
+.grimoire {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 30px;
+}
+
+/* Header - More prominent golden lines and ornate feel */
+.cover {
+  text-align: center;
+  padding: 60px 20px 40px;
+  position: relative;
+  border-bottom: 2px solid var(--gold); /* Golden line border */
+}
+
+.sigil {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 6px;
+  color: var(--ink);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.title-mark {
+  display: inline-block;
+  font-size: 36px;
+  color: var(--gold); /* Clear gold color for symbols */
+  margin: 10px 0 15px;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); /* Clear gold shadow */
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--ink); /* Main dark text on cream background */
+  background: none; /* Removed dark gradient from original */
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.2); /* Subtle gold text shadow */
+}
+
+.title-cn {
+  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  color: var(--ink); /* Main dark text on cream background */
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+}
+
+.epigraph {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 17px;
+  max-width: 650px;
+  margin: 0 auto;
+  color: var(--ash); /* Clearer text on cream background */
+  line-height: 1.7;
+  padding: 25px 0;
+  border-top: 1px solid rgba(212, 175, 55, 0.3); /* Subtle golden line borders for epigraph */
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.epigraph .author {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--gold); /* Golden highlight for author */
+  font-style: normal;
+}
+
+/* Navigation - Update to match new palette with golden highlights */
+.spell-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 40px 0;
+  padding: 20px 0;
+}
+
+.spell-nav button {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4); /* Subtler golden line borders */
+  color: var(--ink); /* Main text color */
+  padding: 10px 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.spell-nav button:hover {
+  border-color: var(--gold); /* Clear gold border on hover */
+  color: var(--gold); /* Golden text highlight */
+  background: rgba(212, 175, 55, 0.05); /* Subtle gold background highlight */
+  transform: translateY(-1px);
+  box-shadow: 0 3px 15px rgba(212, 175, 55, 0.15); /* Subtler gold shadow */
+}
+
+.spell-nav button.active {
+  border-color: var(--blood); /* terracotta red for active state */
+  color: var(--ember); /* Terracotta orange for active text, based on hues in image_2.png */
+  background: rgba(166, 63, 68, 0.06); /* terracotta background highlight */
+  font-weight: 500;
+}
+
+/* Act-wide Container Borders - prominent golden lines for each Act section */
+.section-content {
+  display: none;
+  border: var(--border-style); /* Prominent gold line border for entire Act section */
+  padding: 40px;
+  margin-bottom: 40px;
+  background: rgba(235, 224, 200, 0.6); /* Semi-opaque parchment background for content area */
+  border-radius: 8px; /* Slightly rounded Act sections */
+}
+
+.section-content.active {
+  display: block;
+}
+
+/* Section heading - prominent gold and clearer text on cream */
+.act-heading {
+  text-align: center;
+  margin: 60px 0 40px;
+  position: relative;
+}
+
+.act-number {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold); /* Golden act numbers */
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.act-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  color: var(--ink); /* Clear text color on cream background */
+  margin-top: 10px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.act-title-cn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  color: var(--ash); /* Clearer text on cream background */
+  margin-top: 8px;
+  letter-spacing: 3px;
+  font-weight: 300;
+}
+
+.divider-ornament {
+  text-align: center;
+  margin: 30px 0;
+  color: var(--gold); /* Clear golden color for separators */
+  font-size: 18px;
+  opacity: 0.6;
+  letter-spacing: 20px;
+}
+
+/* Tarot card grid - clear borders and text on cream */
+.tarot-spread {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin: 30px 0;
+}
+
+.tarot-card {
+  position: relative;
+  aspect-ratio: 2 / 3.2;
+  perspective: 1500px;
+  cursor: pointer;
+  border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle golden line borders for cards */
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  border-radius: 4px; /* Slightly rounded cards */
+}
+
+.tarot-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold); /* Prominent gold border on hover */
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 4px; /* Slightly rounded internal card inner */
+}
+
+.tarot-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 4px; /* Slightly rounded internal card face */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card back - Ornate pattern based on image_4.png - image_10.png, using rich soft colors and gold lines on cream */
+.card-back {
+  background: var(--parchment); /* Base parchment on card back */
+  padding: 30px 20px;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.card-back::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.2); /* Subtler golden line border inner on card back */
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Roma numerals use Cinzel for classical feel */
+.card-roman {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--gold); /* Golden Roma numbers */
+  margin-top: 10px;
+}
+
+/* The symbol element gets a subtle ornate pattern based on image_6.png (soft moon pattern on cream) */
+.card-symbol {
+  font-size: 70px;
+  color: var(--ink); /* Clear ink color on cream background */
+  margin: auto 0;
+  animation: pulseLight 4s ease-in-out infinite;
+}
+
+@keyframes pulseLight {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Arcana name uses Cinzel for classical feel */
+.card-arcana-name {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: var(--ink); /* Main dark text on cream background */
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.card-arcana-name-cn {
+  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-size: 13px;
+  color: var(--ash); /* Clearer text on cream background */
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.card-hint {
+  font-size: 10px;
+  color: var(--ash); /* Clearer text on cream background */
+  letter-spacing: 1px;
+  font-style: italic;
+  margin-top: 12px;
+}
+
+/* Card front (event) - prominent golden border inner and text on cream */
+.card-front {
+  background: var(--parchment); /* Base parchment on card front */
+  transform: rotateY(180deg);
+  padding: 22px 20px;
+  overflow-y: auto;
+  border: 2px solid var(--gold); /* Prominent gold line-art inner border on card front */
+}
+
+.card-front::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.15); /* Subtler golden line border inner on card front */
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.card-event-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--ink); /* Main dark text on cream background */
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+
+.card-event-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  color: var(--ink); /* Main dark text on cream background */
+  margin-bottom: 10px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.card-event-body {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(51, 51, 51, 0.9); /* Clear text on cream background */
+  margin-bottom: 12px;
+  font-weight: 300;
+}
+
+.card-event-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15); /* Subtler golden line border separating tags */
+}
+
+.event-tag {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 3px 6px;
+  border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle golden line border for each tag */
+  color: var(--ink); /* Tag text color */
+  border-radius: 1px;
+  text-transform: uppercase;
+}
+
+.card-event-meaning {
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  color: var(--ember); /* Terracotta orange highlight for 'Meaning' text */
+  margin-top: 8px;
+  padding: 8px;
+  background: rgba(217, 140, 108, 0.05); /* Subtle Terracotta background highlight, based on image_2.png */
+  border-left: 2px solid var(--ember); /* Terracotta orange border highlight */
+}
+
+/* Threads section - prominent gold lines and clearer text on cream */
+.threads {
+  margin: 50px 0;
+}
+
+.thread {
+  background: var(--parchment); /* Base parchment on each Thread section */
+  border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle golden line borders for threads */
+  padding: 30px;
+  margin-bottom: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 3px; /* Slightly rounded threads */
+}
+
+.thread::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--gold), transparent);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.thread:hover {
+  border-color: var(--gold); /* Clear gold border on hover */
+  transform: translateX(4px);
+  background: rgba(212, 175, 55, 0.03); /* Subtle gold background highlight */
+}
+
+.thread:hover::before {
+  opacity: 1;
+}
+
+.thread-glyph {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--ink); /* Main dark text color on cream background */
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.thread-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px;
+  color: var(--ink); /* Main dark text on cream background */
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.thread-body {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(51, 51, 51, 0.9); /* Clear text on cream background */
+}
+
+.thread-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 15px;
+}
+
+/* Card reference links use Cormorant Garamond for典雅典雅 feel */
+.thread-card-ref {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  background: rgba(212, 175, 55, 0.03); /* Subtle gold background highlight */
+  border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle golden line border separating tag links */
+  color: var(--ink); /* Tag link text color */
+  border-radius: 1px;
+}
+
+/* Inspiration vault - prominent gold lines and clearer text on cream */
+.vault {
+  background: var(--parchment); /* Base parchment background */
+  border: 2px solid var(--gold); /* Prominent gold line-art outer border on vault section */
+  padding: 40px 30px;
+  margin: 50px 0;
+  position: relative;
+  border-radius: 4px; /* Slightly rounded vault section */
+}
+
+.vault::before, .vault::after {
+  content: '✦';
+  position: absolute;
+  font-size: 18px;
+  color: var(--gold); /* Clear golden color for separator ornaments */
+  opacity: 0.6;
+}
+
+.vault::before { top: -10px; left: 30px; background: var(--parchment); padding: 0 8px; }
+.vault::after { bottom: -10px; right: 30px; background: var(--parchment); padding: 0 8px; }
+
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.spell {
+  border: 1px solid rgba(212, 175, 55, 0.2); /* Subtle golden line border for each spell card */
+  padding: 22px;
+  background: var(--parchment); /* Base parchment for each spell card area */
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 2px; /* Slightly rounded spells */
+}
+
+.spell:hover {
+  border-color: var(--gold); /* Clear gold border on hover */
+  background: rgba(212, 175, 55, 0.03); /* Subtle gold background highlight */
+  transform: scale(1.01);
+}
+
+.spell-rune {
+  font-size: 24px;
+  color: var(--ink); /* Clear ink color on cream background */
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Spell name uses Cormorant Garamond for典雅典雅 feel */
+.spell-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--ink); /* Main dark text on cream background */
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.spell-name-cn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  color: var(--ink); /* Main dark text on cream background */
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.spell-desc {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(51, 51, 51, 0.85); /* Clear text on cream background */
+}
+
+/* Reading area - prominent gold lines and clearer text on cream */
+.reading-altar {
+  margin: 60px 0;
+  text-align: center;
+  padding: 50px 20px;
+  background: var(--parchment); /* Base parchment background */
+  border: 2px solid var(--gold); /* Prominent gold line-art border on altar section */
+  border-radius: 4px; /* Slightly rounded altar */
+}
+
+.altar-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--ink); /* Main dark text color on cream background */
+  margin-bottom: 25px;
+}
+
+.draw-button {
+  background: transparent;
+  border: 1px solid var(--gold); /* Clear golden line borders for buttons */
+  color: var(--gold); /* Golden button text highlight */
+  padding: 15px 40px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.draw-button:hover {
+  background: var(--gold); /* Gold background on hover */
+  color: var(--parchment); /* Creamy parchment text on hover */
+  letter-spacing: 4px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); /* Subtle gold text shadow and box shadow */
+}
+
+.drawn-card-display {
+  margin-top: 35px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawn-message {
+  max-width: 550px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--ink); /* Clear text on cream background */
+  padding: 25px;
+  border: 1px solid rgba(212, 175, 55, 0.4); /* Subtler golden line borderinner display */
+  background: var(--parchment); /* Base parchment inner display area */
+  position: relative;
+  animation: fadeUpMinimal 0.7s ease;
+  border-radius: 3px; /* Slightly rounded display inner */
+}
+
+.drawn-message::before, .drawn-message::after {
+  content: '”';
+  font-family: 'Cinzel', serif;
+  font-size: 50px;
+  color: var(--gold); /* Clear golden color for separators/quotes */
+  opacity: 0.4;
+  position: absolute;
+  line-height: 1;
+}
+.drawn-message::before { top: 8px; left: 12px; }
+.drawn-message::after { bottom: -18px; right: 12px; }
+
+@keyframes fadeUpMinimal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card reference links in message use Cinzel for古典典雅 feel */
+.drawn-attribution {
+  display: block;
+  margin-top: 15px;
+  font-style: normal;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--ink); /* Main dark text color on cream background */
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Footer - prominent gold lines and clearer text on cream */
+.colophon {
+  text-align: center;
+  padding: 50px 20px 30px;
+  border-top: 1px solid var(--gold); /* prominent golden line borderseparator页脚页脚 separation separationseparation页脚 separation separation séparation séparationseparation séparation séparation separación separation séparación séparation separation separation separator separar */
+  margin-top: 60px;
+}
+
+.colophon-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ash); /* Clearer text on cream background */
+  max-width: 550px;
+  margin: 0 auto 18px;
+  line-height: 1.7;
+}
+
+/* Card reference link in colophon colophon colophon uses Cormorant Garamond colophon uses Cormorant Garamond uses Cormorant Garamond for古典典雅古典 feel */
+.colophon-mark {
+  color: var(--ink); /* Main dark text color on cream background */
+  letter-spacing: 3px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+/* Update section visible transitions minimal minimal fadeIn fade fadeMin fadeInMin fadeInMinimal fadeIn Minimal transitionsMinimal transitions minimal */
+@keyframes fadeInMinimal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Update add-note add-note with gold gold lines and text on clear black add black black clear black clear black clear add-note add-note gold gold clear clear black black add-note add-note gold gold black black black add-note add-note add-note add-note add-note add-note add-note add-note add-note add-note add-note */
+.add-note {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--ink); /* Clear ink/dark background */
+  border: 1px solid var(--gold); /* prominent golden line borders for floating button */
+  color: var(--gold); /* Golden icon highlight for floating button highlightfloating button floating button icon */
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.15); /* Subtler gold and black black shadow black black black shadow black shadow shadow black black shadow black shadow */
+}
+
+.add-note:hover {
+  background: var(--gold); /* Gold background on hover for floating button gold background background floating button gold background background floating button gold background background floating button gold background background */
+  color: var(--parchment); /* Creamy parchment text color cream cream background text color cream text color background floating button gold background background floating button gold background */
+  transform: rotate(90deg) scale(1.05);
+}
+
+.note-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(51, 51, 51, 0.9); /* Subtler semi-opaque ink ink dark modal background modal background semi modal background modal semi modal semi-opaque opaque semi modal semi-opaque */
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.note-modal.open {
+  display: flex;
+}
+
+.note-content {
+  background: var(--parchment); /* Base parchment for modal modal internal areas areas internal modal areas modal internal modal areas areas inner areas inner areas modal inner inner inner inner inner inner inner inner inner modal internal areas */
+  border: 2px solid var(--gold); /* prominent golden line borders modal modal modal border-style border modal border border-style modal modal modal border modal */
+  padding: 30px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  border-radius: 4px; /* Slightly rounded modal content areamodal modal internal content internal areas contents internal areas */
+}
+
+.note-content h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--ink); /* Main dark text on modal area text modal text main modal text text modal main */
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.note-content textarea {
+  width: 100%;
+  min-height: 140px;
+  background: rgba(235, 224, 200, 0.6); /* Subtler semi-opaque modal textarea backgroundtextarea modaltextarea opaque opaque opaque opaque textarea */
+  border: 1px solid rgba(212, 175, 55, 0.4); /* Subtler golden line borders separators inner separation séparation separation separation separazione separation separation separacion */
+  color: var(--ink); /* Clear text color textarea textarea clear clear clear clear ink ink clear dark text ink dark clear clear clear clear dark text ink */
+  padding: 12px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  resize: vertical;
+  margin-bottom: 18px;
+  border-radius: 2px; /* Slightly rounded textarea contents contents content content internal areaarea content content contents */
+}
+
+.note-content textarea:focus {
+  outline: none;
+  border-color: var(--gold); /* prominent gold border border separation separate separation separation séparation separate separation separation separation separation separación separazione */
+}
+
+.note-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.note-buttons button {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4); /* Subtler golden line borders separators separating separação separation separation separar séparation separation */
+  color: var(--gold); /* Golden text highlights golden highlights gold highlights gold highlights highlights gold gold highlights gold gold gold highlights gold highlights gold high high highlights */
+  padding: 8px 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.note-buttons button:hover {
+  background: var(--gold); /* Gold background on hover gold background hover button gold background hover gold background hover hover gold high background hover button high high high gold high gold background background background gold background */
+  color: var(--parchment); /* Creamy parchment text on hover text cream text cream text cream text cream text text cream text text high high text text cream cream text text text high text text high text text text cream high high text cream text cream text text cream high cream high high high high high high cream */
+}
+
+.notes-display {
+  margin-top: 25px;
+}
+
+.saved-note {
+  background: rgba(235, 224, 200, 0.6); /* Subtler semi-opaque note container background note container opaque opaque opaque opaque container opaque container opaque opaque container opaque */
+  border-left: 2px solid var(--gold); /* prominent golden line highlights separation separation separacion separación separation separation separation separation separate separate separation separation separate */
+  padding: 18px;
+  margin-bottom: 12px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink); /* Clear ink dark text clear dark ink text dark clear dark ink text ink dark dark clear clear dark text ink */
+  position: relative;
+  border-radius: 1px; /* Slightly rounded note content internal display display display content areas inner contents inner internal displays internal displays displays content displays internal */
+}
+
+.saved-note .note-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--ash); /* Clearer text on cream note date color date date note text text text high color note text note text high date note date date text note text text color note text note text high date color note date date date date */
+  display: block;
+  margin-bottom: 6px;
+}
+
+.saved-note .delete-note {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--ash); /* Clearer icon delete high highlight note note note high icon highlight icon high icon high high icon high icon high highlight highlight icon high icon highlight high highlight icon highlight high highlight icon highlight high */
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.saved-note .delete-note:hover {
+  opacity: 1;
+  color: var(--ember); /* Terracotta orange delete highlight orange highlight delete deletion highlight Terracotta delete Terracotta delete Terracotta delete deletion highlight orange deletion deletion highlight Terracotta high Terracotta Terracotta orange deletion Terracotta deletion highlight Terracotta deletion deletion deletion deletion deletion Terracotta */
+}
+
+@media (max-width: 768px) {
+  .grimoire { padding: 25px 12px; }
+  .cover { padding: 30px 10px 25px; }
+  .spell-nav { gap: 6px; }
+  .spell-nav button { padding: 8px 14px; font-size: 11px; }
+  .vault { padding: 25px 15px; }
+  .section-content { padding: 25px; } /* Update mobile padding for section content as well section section mobile section mobile padding separation mobile section Mobile mobile section sectionMobile separation section Mobile Mobile Mobile Mobile mobile separation Mobile separation separate */
+}
+</style>
+</head>
+<body>
+
+<div class="cosmos"></div>
+<div class="stars" id="stars"></div>
+<div class="smoke"></div>
+
+<div class="grimoire">
+
+  <header class="cover">
+    <div class="sigil">· Liber Tenebrarum ·</div>
+    <div class="title-mark">☾ ☿ ☉</div>
+    <h1 class="title">Grimoire</h1>
+    <div class="title-cn">血与灰的档案</div>
+    <p class="epigraph">
+      "我们死去的姐妹仍在我们的血液里行走。<br>
+      她们的名字是我们必须记住的咒语。"
+      <span class="author">— Audre Lorde, 改写</span>
+    </p>
+  </header>
+
+  <nav class="spell-nav">
+    <button class="active" data-section="arcana">Major Arcana · 大牌阵</button>
+    <button data-section="threads">Red Threads · 血脉相连</button>
+    <button data-section="vault">Inspiration Vault · 灵感库</button>
+    <button data-section="altar">The Altar · 占卜台</button>
+    <button data-section="notes">Personal Codex · 私录</button>
+  </nav>
+
+  <section class="section-content active" id="arcana">
+    <div class="act-heading">
+      <div class="act-number">— Act I —</div>
+      <h2 class="act-title">Major Arcana</h2>
+      <div class="act-title-cn">每一张牌是一个事件,每一个事件是一道伤口</div>
+    </div>
+    <div class="divider-ornament">✦ ✦ ✦</div>
+    <p style="text-align:center; font-style:italic; color:var(--ash); max-width:600px; margin:0 auto 40px; line-height:1.8;">
+      点击牌面翻开。每张牌记录一桩具体事件,但它的"含义"指向更深的结构。<br>
+      这不是新闻库,这是**塔罗式档案**——把碎片重新编织成可读的命运图。
+    </p>
+
+    <div class="tarot-spread" id="tarot-spread"></div>
+
+  </section>
+
+  <section class="section-content" id="threads">
+    <div class="act-heading">
+      <div class="act-number">— Act II —</div>
+      <h2 class="act-title">Red Threads</h2>
+      <div class="act-title-cn">看不见的线,把所有事件织成同一张网</div>
+    </div>
+    <div class="divider-ornament">✧ ✧ ✧</div>
+
+    <div class="threads" id="threads-list"></div>
+
+  </section>
+
+  <section class="section-content" id="vault">
+    <div class="act-heading">
+      <div class="act-number">— Act III —</div>
+      <h2 class="act-title">Inspiration Vault</h2>
+      <div class="act-title-cn">把愤怒炼成作品的咒法</div>
+    </div>
+    <div class="divider-ornament">⚜ ⚜ ⚜</div>
+
+    <div class="vault">
+      <p style="text-align:center; font-style:italic; color:var(--ash); margin-bottom:10px; line-height:1.8;">
+        每一个咒法,都是一个具体的、可执行的创作入口。<br>
+        选择一个,从今晚开始。
+      </p>
+      <div class="vault-grid" id="vault-grid"></div>
+    </div>
+
+  </section>
+
+  <section class="section-content" id="altar">
+    <div class="act-heading">
+      <div class="act-number">— Act IV —</div>
+      <h2 class="act-title">The Altar</h2>
+      <div class="act-title-cn">当你需要一束光,抽一张牌</div>
+    </div>
+    <div class="divider-ornament">☽ ☽ ☽</div>
+
+    <div class="reading-altar">
+      <div class="altar-title">· Draw a Card from the Deck of Witnesses ·</div>
+      <button class="draw-button" onclick="drawCard()">抽 牌 · Draw</button>
+      <div class="drawn-card-display" id="drawn-card-display"></div>
+    </div>
+
+  </section>
+
+  <section class="section-content" id="notes">
+    <div class="act-heading">
+      <div class="act-number">— Act V —</div>
+      <h2 class="act-title">Personal Codex</h2>
+      <div class="act-title-cn">你的火,你的语言,你的存档</div>
+    </div>
+    <div class="divider-ornament">✶ ✶ ✶</div>
+
+    <p style="text-align:center; font-style:italic; color:var(--ash); max-width:600px; margin:0 auto 30px; line-height:1.8;">
+      在这里写下你的观察、愤怒、念头、想做的事。<br>
+      这些会保存在你的浏览器里,只有你能看到。<br>
+      <span style="color:var(--ember); font-size:13px;">⚠ 清除浏览器数据会删除这些记录,重要的请另外备份</span>
+    </p>
+
+    <div style="text-align:center;">
+      <button class="draw-button" onclick="openNoteModal()" style="margin-bottom: 30px;">写 下 一 笔 · Inscribe</button>
+    </div>
+
+    <div class="notes-display" id="notes-display"></div>
+
+  </section>
+
+  <footer class="colophon">
+    <p class="colophon-text">
+      "她们说我们是巫,她们说得对。<br>
+      她们没烧尽的孙女,我们,正在重新点火。"
+    </p>
+    <div class="colophon-mark">✦ Made for 星星 · 2026 ✦</div>
+  </footer>
+</div>
+
+<button class="add-note" onclick="openNoteModal()" title="Add note">✚</button>
+
+<div class="note-modal" id="note-modal">
+  <div class="note-content">
+    <h3>· INSCRIBE ·</h3>
+    <textarea id="note-text" placeholder="今晚我看见了什么。今晚我决定什么。今晚我记住什么。"></textarea>
+    <div class="note-buttons">
+      <button onclick="closeNoteModal()">Cancel</button>
+      <button onclick="saveNote()">Inscribe</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// === DATA ===
+const arcana = [
+  {
+    roman: "I",
+    name: "The Magician",
+    nameCn: "魔术师 · 自命的执法者",
+    symbol: "⚖",
+    date: "2026.04.24 · 深圳",
+    title: "公交站劝烟事件",
+    body: "博主'来杯姬尾酒'劝阻公交站抽烟男,被对方辱骂并用瓶砸。报警后,警方反向追责报警人:'用饮料浇烟涉嫌侮辱'拟拘留5天,且扒衣搜身、强迫摘隐形眼镜、剥夺如厕。施害者无追责。同期警方原话据网友:'我们也抽烟''公交站不算禁烟范围'。",
+    meaning: "权力的赤裸化。当执法者公开站在违法者一侧,法律变成可选择的剧本。",
+    tags: ["国家暴力", "性别羞辱", "执法越权"]
+  },
+  {
+    roman: "II",
+    name: "The High Priestess",
+    nameCn: "女祭司 · 沉默的守门人",
+    symbol: "☾",
+    date: "2022—持续",
+    title: "高铁不卖卫生巾争议",
+    body: "中国高铁拒绝常态化售卖卫生巾,从2022年争议至今。12306以'需求少''空间有限'回应。对照苏格兰2021年立法公共场所免费供应、英格兰学校强制供应、法国25岁以下女性免费——基础需求被反复定义为'特殊诉求'。评论区高频出现'女的要这个就要那个'话术。",
+    meaning: "把具体的身体需求扁平化为'女权膨胀',是父权制最经典的修辞武器。",
+    tags: ["公共服务", "话语操控", "身体政治"]
+  },
+  {
+    roman: "III",
+    name: "The Empress (Reversed)",
+    nameCn: "女皇(逆位) · 被噤声的创造者",
+    symbol: "✎",
+    date: "2024 · 安徽",
+    title: "AO3/海棠 BL作者跨境追捕",
+    body: "多名女性网络小说作者(写BL/同人)被安徽兰山警方跨省抓捕、判刑、巨额罚款。罪名涉及'传播淫秽物品牟利'。被处罚的多是月入几百到几千元的小作者,虚构内容不涉及真实人物或未成年。",
+    meaning: "最让父权恐慌的不是女性的实际权益要求,而是女性作为欲望主体的写作。这个位置的翻转触碰了制度的底线。",
+    tags: ["司法暴力", "女性书写", "性的话语权"]
+  },
+  {
+    roman: "IV",
+    name: "The Emperor",
+    nameCn: "皇帝 · 配额制的暴政",
+    symbol: "⚔",
+    date: "持续 · 全国警校",
+    title: "警校录取分数线性别歧视",
+    body: "中国各省警校招生分数线长期对女性额外加码:广东2025届中国人民公安大学男生最低586/女生630;安徽2024提前批中国人民公安大学物化组男生474/女生624(差150分)。体能已作为独立项考核,文化课分数线再次按性别拉差距,本质是先有招生比例再有分数线。",
+    meaning: "国家暴力机器从招录环节就在过滤女性,然后这台过滤过的机器回过头来管理女性。这是父权制的自动闭环。",
+    tags: ["教育歧视", "国家机器", "结构性排除"]
+  },
+  {
+    roman: "V",
+    name: "The Hierophant",
+    nameCn: "教皇 · 字源里的暴力",
+    symbol: "♀",
+    date: "公元前 · 甲骨文",
+    title: '"妻"字的字源',
+    body: "甲骨文与金文中,'妻'字象形为'一只手抓住女人头发'。《说文解字》古字形为'从女从又(手)持之'。'取'字字源为'耳朵+手',来自战争中割敌方耳朵计功的旧俗;'取妻'连用,延续掠夺语义。汉字日常用语中保留大量被遗忘的暴力词源。",
+    meaning: "你今晚的愤怒可以追溯到三千年前。中间没有断裂,是一条连续的线。",
+    tags: ["语言暴力", "历史长线", "符号考古"]
+  },
+  {
+    roman: "VI",
+    name: "The Lovers",
+    nameCn: "恋人 · 公共承认的代价",
+    symbol: "❀",
+    date: "持续",
+    title: "酒店餐厅卫生用品的国境差",
+    body: "海外:医院、高档酒店、部分餐厅常态化免费提供卫生巾棉条;苏格兰立法保障公共场所免费供应。国内:连付费购买都无法实现常态化。这个差距不是经济的,是承认的——一个社会是否承认女性身体需求的合法性。",
+    meaning: "每一片国外免费供应的卫生巾,都在反衬国内女性需要为基础需求反复自证的疲惫。",
+    tags: ["跨国对照", "承认政治", "日常隐性"]
+  },
+  {
+    roman: "VII",
+    name: "The Tower",
+    nameCn: "塔 · 被扒光的瞬间",
+    symbol: "⚡",
+    date: "2026.04.24 深夜",
+    title: "证人的自述",
+    body: "'来杯姬尾酒'本人发文:'对不起没有坚持到最后。让我做安检的时候要求趴在墙上,脱光衣服并扒下内裤,取掉眼镜。我1200度高度近视也被要求不能戴隐形。最后的坚持就是拒绝罚款,因为我不觉得我错了。'她在签下和解书后写下这段文字。",
+    meaning: "她没有任何对不起任何人。她在被国家暴力直接施加于身体的情况下做出的选择,是任何人都会做的合理选择。她的帖子本身就是抵抗——是把这件事钉进公共记忆的一次行动。",
+    tags: ["证词", "酷刑", "档案"]
+  },
+  {
+    roman: "VIII",
+    name: "Strength",
+    nameCn: "力量 · 火朝外烧",
+    symbol: "🜂",
+    date: "未来 · 进行时",
+    title: "侠的现代形态",
+    body: "侠不是革命者、不是活动家、不是斗士。侠的核心是对失衡的本能反应,合法性来自'公理自在人心'这一个判断。看见不平之事身体先动,看见辜负之人心里先记。它不需要组织、不需要纲领、不需要被授权——它是前政治的政治,比任何主义都古老。",
+    meaning: "你今晚做的事:把一直被你当作问题的愤怒,重新认领为构成性的力量。这不是和解,是收回主权。",
+    tags: ["主体性", "伦理", "认领"]
+  },
+  {
+    roman: "IX",
+    name: "The Hermit",
+    nameCn: "隐者 · 翻译者的位置",
+    symbol: "✦",
+    date: "现在",
+    title: "双语者的特殊责任",
+    body: "你是中文-英文双语,人在UK,有理论训练,做实验影像。深圳那件事大部分英语世界的人不会知道、不会理解、即使知道也只能看到表层。AO3案在英语女性主义学界几乎完全不在场。你有能力做的事是把这些事件用英语世界能接住的理论语言写出来——让它们进入档案。让二十年后的研究者能找到一手英文记述。",
+    meaning: "翻译不是中性工作。在这种语境下,翻译是一种保存证据的政治行动。",
+    tags: ["跨文化", "档案工作", "学术行动"]
+  }
+];
+
+const threads = [
+  {
+    glyph: "✶ THREAD I",
+    title: "国家暴力机器的自我闭环",
+    body: "警校分数线把女性挡在执法系统外 → 进入系统的男性回过头来管理女性身体 → 派出所里围着报警人扒衣搜身的几个男警察,他们当年的高考分数不需要达到女生的标准。这不是巧合,这是一个结构性反向选择机制——让最不该有权力的人获得权力,让最有能力的人被那种权力压迫。",
+    cards: ["IV. The Emperor", "I. The Magician", "VII. The Tower"]
+  },
+  {
+    glyph: "✶ THREAD II",
+    title: "焦点转移作为认知操控术",
+    body: "深圳警方通报选择性披露'水杯掉在路边'作为'她没素质'的证据;高铁拒绝卖卫生巾被论证为'女性贪心';BL作者被定罪不讨论司法越权而讨论'内容低俗'。这是一种系统性的话术操作:把一个涉及国家暴力、性别羞辱、司法越权的复合事件,降维成一个关于'个人素质'的争吵——一旦舆论场被拽进这个层面,真正的问题就被埋掉了。",
+    cards: ["I. The Magician", "II. The High Priestess", "III. The Empress (Reversed)"]
+  },
+  {
+    glyph: "✶ THREAD III",
+    title: "女性作为欲望主体的禁区",
+    body: "BL作者案的特殊残忍在于:那不是女性在要求实际权益,那是女性在想象中的虚构区域里写虚构的男性之间的性——连真实身体都不涉及。但就是这个最脱离物理现实的、最纯符号的行为引发了最暴烈的国家反应。父权制最在意的核心是:女性作为性的主动观看者和欲望生产者,而不是被观看、被消费的客体。这个位置的翻转是底线。",
+    cards: ["III. The Empress (Reversed)", "V. The Hierophant"]
+  },
+  {
+    glyph: "✶ THREAD IV",
+    title: "Federici 视角:父权和资本主义是一个系统",
+    body: "Silvia Federici 在《Caliban and the Witch》里论证:女性的无偿劳动和被压低价格的劳动是整个经济结构的隐形地基。'奴隶/娼妓/劳动力/保姆'四个位置加起来,女性在父权国家机器里被分配的功能是结构性的。任何一个位置的拒绝都会震荡整个系统——这就是为什么这些看似不相关的议题,会引发同一种暴烈反应。",
+    cards: ["II. The High Priestess", "IV. The Emperor", "III. The Empress (Reversed)"]
+  },
+  {
+    glyph: "✶ THREAD V",
+    title: "暴烈是不稳的征兆,不是稳的证明",
+    body: "真正稳固的权力不需要这么频繁地表演。2015年之前,不会有这么多女性注意到、命名、连接这些事件之间的关系。是这一代中国女性的集体觉醒逼得系统开始焦虑式过度反应。它扒光那个女生、跨省抓那些作者、删除每一条高铁卫生巾的讨论——不是因为它强,是因为它正在失去解释权。",
+    cards: ["VII. The Tower", "VIII. Strength", "IX. The Hermit"]
+  }
+];
+
+const spells = [
+  {
+    rune: "🜍",
+    name: "Spell of Naming",
+    nameCn: "命名咒",
+    desc: "把每一个事件用精确的国际人权法或社会理论术语重新命名。深圳那件事不是'过度执法',是'残忍、不人道、有辱人格的待遇'(违反《禁止酷刑公约》)。命名是第一步,因为命名之后,事件就不再是孤立的而进入了一个可被检索、可被引用、可被反复指证的话语网络。"
+  },
+  {
+    rune: "🜔",
+    name: "Spell of Translation",
+    nameCn: "翻译咒",
+    desc: "选一个事件,写一篇1500-3000字的英文长文,用英语女性主义和批判理论框架重新梳理。投给 LARB China Channel、SupChina(if active)、Made in China Journal、n+1。让它进入英文学术-评论界的档案。"
+  },
+  {
+    rune: "🜂",
+    name: "Spell of Documentation",
+    nameCn: "存档咒",
+    desc: "今晚开始,建立一个加密的事件档案库——日期、地点、当事人(化名)、原始截图、官方回应、舆论变化、被删帖的证据。Notion/Obsidian/纸本笔记本都可以。这是你以后做毕设、写论文、做装置作品的一手素材。"
+  },
+  {
+    rune: "🜃",
+    name: "Spell of Imagery",
+    nameCn: "影像咒",
+    desc: "用你的实验影像方法回应这些事件,而不是直白复述。空荡的公交站台拍6小时,字幕在底端缓慢滚出'来杯姬尾酒'的自述全文——这种 durational, non-narrative 的处理比任何快剪都更有力量。Maya Deren、Chantal Akerman、Shirin Neshat 是参考。"
+  },
+  {
+    rune: "✦",
+    name: "Spell of Companions",
+    nameCn: "结伴咒",
+    desc: "和亭宜聊一次。看她对这些事的反应。如果她在意,你们俩可以做双人项目——两个在UK的中国女性艺术家共同回应国内女性处境。这种作品在英国本地女性主义艺术语境里有具体的接收语境,而且两个人比一个人可持续。"
+  },
+  {
+    rune: "☾",
+    name: "Spell of the Library",
+    nameCn: "图书馆咒",
+    desc: "去 Glasgow Women's Library 一次。带一杯咖啡,坐两小时。问他们能否捐赠或建立中国当代女性议题的档案文件夹。他们对这种 living archive 项目通常非常欢迎,而且会给你 archival skill 的工作经验——直接对接你 art advisory 的职业目标。"
+  },
+  {
+    rune: "♆",
+    name: "Spell of the Diagonal",
+    nameCn: "对角线咒",
+    desc: "把这些事件放进你毕设'diagramming as queer survival'的框架里——你已经在用图解作为生存策略,现在把它扩展为档案策略.事件之间的连线本身就是作品形式:不是叙述,是 diagram。这给你supervisor一个无法反驳的合法理由继续 video-based work。"
+  },
+  {
+    rune: "🜚",
+    name: "Spell of Slow Burn",
+    nameCn: "慢烧咒",
+    desc: "不要试图今晚做完所有事。火要轮班,侠也要养伤。给自己定一个最低限频率:每周一次档案更新,每月一次创作产出,每学期一次公开展示或写作。可持续的愤怒比爆发的愤怒强得多。"
+  }
+];
+
+const oracleMessages = [
+  { msg: "你看见的不是错觉,是一条三千年的连续线。", attr: "甲骨文 · 妻字" },
+  { msg: "她没有任何对不起任何人。她在为一件根本不该由她道歉的事道歉。", attr: "深圳 · 4.24" },
+  { msg: "暴烈不是稳的证明,是不稳的征兆。", attr: "Strength · 逆读" },
+  { msg: "命名很重要,因为命名之后,你可以有意识地继续做。", attr: "Spell of Naming" },
+  { msg: "无力是它想让你产生的反应。愤怒是认知清醒的副产品。", attr: "The Hermit" },
+  { msg: "翻译不是中性工作。在这种语境下,翻译是保存证据的政治行动。", attr: "Spell of Translation" },
+  { msg: "她的帖子本身就是抵抗——是把这件事钉进公共记忆的一次行动。", attr: "VII. The Tower" },
+  { msg: "你的艺术实践本身就是这团火的出口之一。你已经在散热了。", attr: "VIII. Strength" },
+  { msg: "侠也要养伤、也要喝酒、也要在桃花树下睡觉。火要轮班。", attr: "Spell of Slow Burn" },
+  { msg: "把这张截图存下来。每一份愤怒到颤抖的证据,都是档案。", attr: "Personal Codex" },
+  { msg: "你不需要从零开始。你正在做的事就是开始。", attr: "Spell of Documentation" },
+  { msg: "公理自在人心。但它不会自己显形,需要有人承担显形的代价。", attr: "VIII. Strength" },
+  { msg: "她们没烧尽的孙女,正在重新点火。", attr: "Colophon" }
+];
+
+// === RENDER FUNCTIONS ===
+function renderArcana() {
+  const grid = document.getElementById('tarot-spread');
+  grid.innerHTML = arcana.map((card, i) => `
+    <div class="tarot-card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="card-face card-back">
+          <div class="card-roman">${card.roman}</div>
+          <div class="card-symbol">${card.symbol}</div>
+          <div>
+            <div class="card-arcana-name">${card.name}</div>
+            <div class="card-arcana-name-cn">${card.nameCn}</div>
+            <div class="card-hint">— turn the card —</div>
+          </div>
+        </div>
+        <div class="card-face card-front">
+          <div class="card-event-date">${card.date}</div>
+          <div class="card-event-title">${card.title}</div>
+          <div class="card-event-body">${card.body}</div>
+          <div class="card-event-meaning">${card.meaning}</div>
+          <div class="card-event-tags">
+            ${card.tags.map(t => `<span class="event-tag">${t}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderThreads() {
+  const list = document.getElementById('threads-list');
+  list.innerHTML = threads.map(t => `
+    <div class="thread">
+      <div class="thread-glyph">${t.glyph}</div>
+      <div class="thread-title">${t.title}</div>
+      <div class="thread-body">${t.body}</div>
+      <div class="thread-cards">
+        ${t.cards.map(c => `<span class="thread-card-ref">${c}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderVault() {
+  const grid = document.getElementById('vault-grid');
+  grid.innerHTML = spells.map(s => `
+    <div class="spell">
+      <span class="spell-rune">${s.rune}</span>
+      <div class="spell-name">${s.name}</div>
+      <div class="spell-name-cn">${s.nameCn}</div>
+      <div class="spell-desc">${s.desc}</div>
+    </div>
+  `).join('');
+}
+
+// === STARS ===
+function makeStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.setProperty('--dur', (3 + Math.random() * 5) + 's');
+    star.style.animationDelay = Math.random() * 5 + 's';
+    container.appendChild(star);
+  }
+}
+
+// === NAVIGATION ===
+document.querySelectorAll('.spell-nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.spell-nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+    document.getElementById(btn.dataset.section).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// === DRAW CARD ===
+function drawCard() {
+  const display = document.getElementById('drawn-card-display');
+  const card = oracleMessages[Math.floor(Math.random() * oracleMessages.length)];
+  display.innerHTML = `
+    <div class="drawn-message">
+      ${card.msg}
+      <span class="drawn-attribution">— ${card.attr} —</span>
+    </div>
+  `;
+}
+
+// === NOTES ===
+let notes = [];
+
+async function loadNotes() {
+  try {
+    const result = await window.storage.list('note:');
+    if (!result || !result.keys) {
+      notes = [];
+      renderNotes();
+      return;
+    }
+    const loaded = [];
+    for (const key of result.keys) {
+      try {
+        const r = await window.storage.get(key);
+        if (r && r.value) {
+          loaded.push(JSON.parse(r.value));
+        }
+      } catch (e) {}
+    }
+    notes = loaded.sort((a,b) => b.timestamp - a.timestamp);
+    renderNotes();
+  } catch (e) {
+    console.log('Storage not available, using session memory');
+    notes = [];
+    renderNotes();
+  }
+}
+
+function openNoteModal() {
+  document.getElementById('note-modal').classList.add('open');
+  document.getElementById('note-text').focus();
+}
+
+function closeNoteModal() {
+  document.getElementById('note-modal').classList.remove('open');
+  document.getElementById('note-text').value = '';
+}
+
+async function saveNote() {
+  const text = document.getElementById('note-text').value.trim();
+  if (!text) return;
+  const note = {
+    id: 'note:' + Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    text: text,
+    timestamp: Date.now(),
+    date: new Date().toLocaleString('zh-CN', { dateStyle: 'medium', timeStyle: 'short' })
+  };
+  try {
+    await window.storage.set(note.id, JSON.stringify(note));
+    notes.unshift(note);
+    renderNotes();
+  } catch (e) {
+    notes.unshift(note);
+    renderNotes();
+  }
+  closeNoteModal();
+}
+
+async function deleteNote(id) {
+  try {
+    await window.storage.delete(id);
+  } catch (e) {}
+  notes = notes.filter(n => n.id !== id);
+  renderNotes();
+}
+
+function renderNotes() {
+  const display = document.getElementById('notes-display');
+  if (!notes.length) {
+    display.innerHTML = `<p style="text-align:center; color:var(--ash); font-style:italic; padding:30px;">— 还没有任何记录 · empty grimoire —</p>`;
+    return;
+  }
+  display.innerHTML = notes.map(n => `
+    <div class="saved-note">
+      <span class="note-date">${n.date}</span>
+      ${n.text.replace(/\n/g, '<br>')}
+      <button class="delete-note" onclick="deleteNote('${n.id}')" title="delete">✕</button>
+    </div>
+  `).join('');
+}
+
+// === INIT ===
+makeStars();
+renderArcana();
+renderThreads();
+renderVault();
+loadNotes();
+
+// Click outside modal to close
+document.getElementById('note-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'note-modal') closeNoteModal();
+});
+</script>
+
+</body>
+</html>
